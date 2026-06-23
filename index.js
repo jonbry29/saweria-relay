@@ -7,6 +7,14 @@ app.use(bodyParser.json());
 
 let latestDonation = null;
 
+// Endpoint Utama biar Vercel ga Error 500 pas dicek di browser
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "Server Relay Saweria-Roblox Aktif!",
+    info: "Silakan gunakan /saweria-webhook dan /get-donation",
+  });
+});
+
 app.post("/saweria-webhook", (req, res) => {
   const donationData = req.body;
   console.log("Donasi Baru Masuk:", donationData);
@@ -32,3 +40,6 @@ app.get("/get-donation", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server relay jalan di port ${PORT}`);
 });
+
+// Ini bagian krusial buat Vercel Serverless
+module.exports = app;
